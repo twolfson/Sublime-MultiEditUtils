@@ -78,7 +78,8 @@ class NormalizeRegionEndsCommand(sublime_plugin.TextCommand):
 			regions = self.normalizeRegions(selection)
 
 		selection.clear()
-		selection.add_all(regions)
+		for region in regions:
+			selection.add(region)
 
 
 	def normalizeRegions(self, regions):
@@ -91,10 +92,11 @@ class NormalizeRegionEndsCommand(sublime_plugin.TextCommand):
 		invertedRegions = []
 
 		for region in regions:
+			invertedRegion = region
 			if condition(region):
-				[region.a, region.b] = [region.b, region.a]
+				invertedRegion = sublime.Region(region.b, region.a)
 
-			invertedRegions.append(region)
+			invertedRegions.append(invertedRegion)
 
 		return invertedRegions
 
