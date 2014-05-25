@@ -142,7 +142,8 @@ class SplitSelectionCommand(sublime_plugin.TextCommand):
 
 		selection = self.view.sel()
 		selection.clear()
-		selection.add_all(self.savedSelection)
+		for region in self.savedSelection:
+			selection.add(region)
 
 		self.workaroundForRefreshBug(self, self.view, selection)
 
@@ -172,7 +173,8 @@ class SplitSelectionCommand(sublime_plugin.TextCommand):
 
 		selection = view.sel()
 		selection.clear()
-		selection.add_all(newRegions)
+		for region in newRegions:
+			selection.add(region)
 
 		self.workaroundForRefreshBug(view, selection)
 
